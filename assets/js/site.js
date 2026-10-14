@@ -91,10 +91,14 @@
   /* Lightbox */
   var lightbox = $('#lightbox'), lbImage = $('#lbImage'), lbCaption = $('#lbCaption');
   var currentSet = [], currentIndex = 0, lastFocus = null;
+  function pcSource(p) {
+    /* Some photos have a desktop-only edited version; phones keep the original. */
+    return (p.pcSrc && window.matchMedia('(min-width:721px)').matches) ? p.pcSrc : p.src;
+  }
   function updateLightbox() {
     var item = currentSet[currentIndex];
     if (!item) return;
-    lbImage.src = item.src;
+    lbImage.src = pcSource(item);
     lbImage.alt = item.alt || '';
     lbCaption.textContent = (item.title || item.alt || 'Photo') + ' · ' + (currentIndex + 1) + ' / ' + currentSet.length;
     var multi = currentSet.length > 1;
@@ -138,14 +142,14 @@
   var PHOTOS = {
     preview: [
       { src: 'assets/photos/food-table.jpg', alt: 'Table garnie de plats LÜMA', title: 'Table garnie' },
-      { src: 'assets/photos/pizza-original.jpg', alt: 'Pizza photographiée chez LÜMA', title: 'Pizza' },
+      { src: 'assets/photos/pizza-original.jpg', pcSrc: 'assets/photos/pizza-original-pc.jpg?v=21', alt: 'Pizza photographiée chez LÜMA', title: 'Pizza' },
       { src: 'assets/photos/seafood-original.jpg', alt: 'Plat de fruits de mer photographié chez LÜMA', title: 'Fruits de mer' },
       { src: 'assets/photos/dessert-closeup.jpg', alt: 'Dessert photographié chez LÜMA', title: 'Dessert' },
       { src: 'assets/photos/dessert-drink.jpg', alt: 'Dessert et boisson photographiés chez LÜMA', title: 'Dessert et boisson' }
     ],
     full: [
       /* Only photographs that appear nowhere else on the site. */
-      { src: 'assets/photos/pizza-original.jpg', alt: 'Pizza photographiée chez LÜMA', title: 'Pizza' },
+      { src: 'assets/photos/pizza-original.jpg', pcSrc: 'assets/photos/pizza-original-pc.jpg?v=21', alt: 'Pizza photographiée chez LÜMA', title: 'Pizza' },
       { src: 'assets/photos/seafood-original.jpg', alt: 'Plat de fruits de mer photographié chez LÜMA', title: 'Fruits de mer' },
       { src: 'assets/photos/plated-dish-original.jpg', alt: 'Assiette dressée photographiée chez LÜMA', title: 'Assiette dressée' },
       { src: 'assets/photos/menu-dish-01.jpg', alt: 'Plat photographié chez LÜMA', title: 'Plat' },
@@ -169,7 +173,17 @@
       b.setAttribute('aria-label', 'Agrandir : ' + p.title);
       var img = document.createElement('img');
       img.src = p.src; img.alt = p.alt; img.loading = 'lazy';
-      b.appendChild(img);
+      if (p.pcSrc) {
+        var pic = document.createElement('picture');
+        var s = document.createElement('source');
+        s.media = '(min-width:721px)';
+        s.srcset = p.pcSrc;
+        pic.appendChild(s);
+        pic.appendChild(img);
+        b.appendChild(pic);
+      } else {
+        b.appendChild(img);
+      }
       var cap = document.createElement('span');
       cap.className = 'gallery-cap'; cap.textContent = p.title;
       b.appendChild(cap);
