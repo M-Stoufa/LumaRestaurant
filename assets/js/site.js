@@ -267,7 +267,7 @@
             sp.textContent = String(it[1]).replace('.', ',') + ' DT';
             row.appendChild(sp);
           }
-          if (it[2]) { var sm = document.createElement('small'); sm.textContent = it[2]; row.appendChild(sm); }
+          if (it[2]) { var sm = document.createElement('small'); sm.textContent = it[2]; row.appendChild(sm); row.classList.add('has-desc'); }
           list.appendChild(row);
         });
         article.appendChild(list);
