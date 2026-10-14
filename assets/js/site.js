@@ -170,6 +170,9 @@
       var img = document.createElement('img');
       img.src = p.src; img.alt = p.alt; img.loading = 'lazy';
       b.appendChild(img);
+      var cap = document.createElement('span');
+      cap.className = 'gallery-cap'; cap.textContent = p.title;
+      b.appendChild(cap);
       b.addEventListener('click', function () { openLightbox(set, i, b); });
       grid.appendChild(b);
     });
