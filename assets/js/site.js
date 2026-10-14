@@ -139,9 +139,9 @@
     preview: [
       { src: 'assets/photos/food-table.jpg', alt: 'Table garnie de plats LÜMA', title: 'Table garnie' },
       { src: 'assets/photos/pizza-original.jpg', alt: 'Pizza photographiée chez LÜMA', title: 'Pizza' },
-      { src: 'assets/photos/pasta-original.jpg', alt: 'Plat de pâtes photographié chez LÜMA', title: 'Pâtes' },
       { src: 'assets/photos/seafood-original.jpg', alt: 'Plat de fruits de mer photographié chez LÜMA', title: 'Fruits de mer' },
-      { src: 'assets/photos/dessert-closeup.jpg', alt: 'Dessert photographié chez LÜMA', title: 'Dessert' }
+      { src: 'assets/photos/dessert-closeup.jpg', alt: 'Dessert photographié chez LÜMA', title: 'Dessert' },
+      { src: 'assets/photos/dessert-drink.jpg', alt: 'Dessert et boisson photographiés chez LÜMA', title: 'Dessert et boisson' }
     ],
     full: [
       { src: 'assets/photos/pizza-original.jpg', alt: 'Pizza photographiée chez LÜMA', title: 'Pizza' },
@@ -150,18 +150,19 @@
       { src: 'assets/photos/plated-dish-original.jpg', alt: 'Assiette dressée photographiée chez LÜMA', title: 'Assiette dressée' },
       { src: 'assets/photos/dessert-cheesecake-logo.jpg', alt: 'Cheesecake aux fruits rouges devant l’enseigne lumineuse LÜMA', title: 'Cheesecake · enseigne LÜMA' },
       { src: 'assets/photos/restaurant-logo-photo.jpg', alt: 'Plat de pâtes devant l’enseigne lumineuse LÜMA Kitchen and More', title: 'Enseigne LÜMA' },
-      { src: 'assets/photos/interior-panorama.jpg', alt: 'Vue panoramique de la salle du restaurant LÜMA', title: 'La salle' },
-      { src: 'assets/photos/interior-seating.jpg', alt: 'Espace salon avec fauteuils et tables chez LÜMA', title: 'Espace salon' },
       { src: 'assets/photos/food-table.jpg', alt: 'Table garnie de plats chez LÜMA', title: 'Table garnie' },
       { src: 'assets/photos/dessert-plate.jpg', alt: 'Dessert servi chez LÜMA', title: 'Dessert servi' },
-      { src: 'assets/photos/seafood.jpg', alt: 'Plateau de fruits de mer servi chez LÜMA', title: 'Plateau de fruits de mer' },
       { src: 'assets/photos/dessert-closeup.jpg', alt: 'Gros plan sur un dessert LÜMA', title: 'Dessert' },
       { src: 'assets/photos/dessert-drink.jpg', alt: 'Dessert et boisson photographiés chez LÜMA', title: 'Dessert et boisson' },
       { src: 'assets/photos/drink.jpg', alt: 'Boisson servie chez LÜMA', title: 'Boisson' },
+      { src: 'assets/photos/dessert-oreo-cake.jpg', alt: 'Cheesecake aux Oreo photographié chez LÜMA', title: 'Cheesecake Oreo' },
       { src: 'assets/photos/menu-dish-01.jpg', alt: 'Plat photographié chez LÜMA', title: 'Plat' },
+      { src: 'assets/photos/menu-dish-02.jpg', alt: 'Riz aux crevettes photographié chez LÜMA', title: 'Riz aux crevettes' },
       { src: 'assets/photos/menu-dish-03.jpg', alt: 'Plat photographié chez LÜMA', title: 'Plat' },
+      { src: 'assets/photos/menu-dish-04.jpg', alt: 'Pâtes à la sauce tomate photographiées chez LÜMA', title: 'Pâtes' },
+      { src: 'assets/photos/menu-dish-05.jpg', alt: 'Gâteau aux fraises photographié chez LÜMA', title: 'Gâteau aux fraises' },
       { src: 'assets/photos/menu-dish-06.jpg', alt: 'Plat photographié chez LÜMA', title: 'Plat' },
-      { src: 'assets/photos/salad-original.jpg', alt: 'Salade photographiée chez LÜMA', title: 'Salade' },
+      { src: 'assets/photos/menu-dish-07.jpg', alt: 'Cheesecake au caramel photographié chez LÜMA', title: 'Cheesecake caramel' },
       { src: 'assets/photos/sharing-food-original.jpg', alt: 'Assortiment de plats à partager chez LÜMA', title: 'À partager' }
     ]
   };
