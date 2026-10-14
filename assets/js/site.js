@@ -197,6 +197,8 @@
     function currentQuery() { return searchInput ? searchInput.value.trim().toLowerCase() : ''; }
     function renderMenu() {
       var q = currentQuery();
+      /* Keep the transparency note across re-renders so it can join the masonry flow. */
+      var note = document.getElementById('verifyNote');
       filterHost.innerHTML = '';
       var cats = ['Toutes'].concat(LUMA_MENU.map(function (c) { return c.category; }));
       cats.forEach(function (cat) {
@@ -253,6 +255,9 @@
         p.textContent = 'Aucun plat ne correspond à cette recherche. Essayez un autre mot.';
         resultsHost.appendChild(p);
       }
+      /* Tuck the transparency note at the end of the masonry so it fills
+         the short column instead of sitting alone below the grid. */
+      if (note && !limit) { resultsHost.appendChild(note); }
       if (countHost) {
         var all = 0;
         LUMA_MENU.forEach(function (g) { all += g.items.length; });
