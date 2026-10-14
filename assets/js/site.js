@@ -327,19 +327,17 @@
     filterHost.addEventListener('scroll', pillsSyncEdges, { passive: true });
     window.addEventListener('resize', pillsSyncEdges);
     function pillsTick(t) {
-      if (!pillsReduceMotion && !pillsDrag && !pillsIdle && !document.hidden && t >= pillsDwellUntil) {
-        if (!pillsLastT) { pillsLastT = t; }
-        var dt = Math.min(0.05, (t - pillsLastT) / 1000);
-        pillsLastT = t;
+      if (!pillsReduceMotion && !pillsDrag && !pillsIdle && !document.hidden) {
         var max = pillsMax();
-        if (max > 0 && dt > 0) {
-          var next = filterHost.scrollLeft + pillsDir * PILLS_SPEED * dt;
-          if (next >= max) { next = max; pillsDir = -1; pillsDwellUntil = t + PILLS_DWELL_MS; }
-          else if (next <= 0) { next = 0; pillsDir = 1; pillsDwellUntil = t + PILLS_DWELL_MS; }
-          filterHost.scrollLeft = next;
+        if (max > 0 && t > 500) {
+          var advance = PILLS_SPEED * 0.016;
+          var next = filterHost.scrollLeft + pillsDir * advance;
+          if (next >= max) { next = max; pillsDir = -1; pillsIdle = window.setTimeout(function(){ pillsIdle = null; pillsLastT = t + 1200; }, PILLS_DWELL_MS); }
+          else if (next <= 0) { next = 0; pillsDir = 1; pillsIdle = window.setTimeout(function(){ pillsIdle = null; pillsLastT = t + 1200; }, PILLS_DWELL_MS); }
+          filterHost.scrollLeft = Math.round(next * 1000) / 1000;
           pillsSyncEdges();
         }
-      } else if (pillsDrag || pillsIdle) { pillsLastT = 0; }
+      } else if (pillsDrag || pillsIdle) { /* paused */ }
       window.requestAnimationFrame(pillsTick);
     }
     pillsSyncEdges();
