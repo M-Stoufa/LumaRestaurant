@@ -274,7 +274,12 @@
       if (countHost) {
         var all = 0;
         LUMA_MENU.forEach(function (g) { all += g.items.length; });
-        countHost.textContent = total + ' plat' + (total > 1 ? 's' : '') + ' affiché' + (total > 1 ? 's' : '') + ' · ' + all + ' au total';
+        /* Quiet caption: avoid the redundant "217 affichés · 217 au total". */
+        var label = total + ' plat' + (total > 1 ? 's' : '');
+        if (total !== all) {
+          label += ' affiché' + (total > 1 ? 's' : '') + ' · ' + all + ' au total';
+        }
+        countHost.textContent = label;
       }
       void esc;
     }
