@@ -278,7 +278,39 @@
       }
       void esc;
     }
-    if (searchInput) searchInput.addEventListener('input', renderMenu);
+    if (searchInput) {
+      var searchClear = $('#menuSearchClear');
+      function syncSearchClear() {
+        if (searchClear) searchClear.hidden = !searchInput.value;
+      }
+      searchInput.addEventListener('input', function () { syncSearchClear(); renderMenu(); });
+      if (searchClear) {
+        searchClear.addEventListener('click', function () {
+          searchInput.value = '';
+          syncSearchClear();
+          renderMenu();
+          searchInput.focus();
+        });
+      }
+      searchInput.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && searchInput.value) {
+          e.preventDefault();
+          searchInput.value = '';
+          syncSearchClear();
+          renderMenu();
+        }
+      });
+      /* "/" jumps to the search field, like a pro tool. */
+      document.addEventListener('keydown', function (e) {
+        if (e.key !== '/' || e.ctrlKey || e.metaKey || e.altKey) return;
+        var el = e.target;
+        var tag = (el && el.tagName) || '';
+        if (/^(INPUT|TEXTAREA|SELECT)$/.test(tag) || (el && el.isContentEditable)) return;
+        e.preventDefault();
+        searchInput.focus();
+      });
+      syncSearchClear();
+    }
     renderMenu();
   }
 

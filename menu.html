@@ -8,7 +8,7 @@
 <meta name="robots" content="noindex,nofollow">
 <meta name="theme-color" content="#171916">
 <link rel="icon" href="assets/photos/luma-logo.jpg">
-<link rel="stylesheet" href="assets/css/site.css?v=13">
+<link rel="stylesheet" href="assets/css/site.css?v=14">
 </head>
 <body class="no-js page-menu">
 <a class="skip-link" href="#contenu">Aller au contenu</a>
@@ -42,7 +42,12 @@
   <div class="wrap">
     <div class="menu-browser" style="margin-top:0;border-top:0;padding-top:0">
       <div class="menu-toolbar">
-        <label class="menu-search"><span aria-hidden="true">⌕</span><input type="search" id="menuSearch" placeholder="Rechercher un plat… (ex. pizza, Nutella, jus)" aria-label="Rechercher dans la carte" autocomplete="off"></label>
+        <div class="menu-search">
+          <svg class="menu-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.7-3.7"/></svg>
+          <input type="search" id="menuSearch" placeholder="Rechercher un plat, une boisson…" aria-label="Rechercher dans la carte" autocomplete="off">
+          <button class="menu-search-clear" id="menuSearchClear" type="button" aria-label="Effacer la recherche" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M7 7l10 10M17 7L7 17"/></svg></button>
+          <kbd class="menu-search-hint" aria-hidden="true">/</kbd>
+        </div>
         <span class="menu-count" id="menuCount" aria-live="polite"></span>
       </div>
       <div class="menu-filters" id="menuFilters" aria-label="Filtrer la carte par catégorie"></div>
@@ -58,7 +63,7 @@
 </main>
 <footer class="footer"><div class="wrap footer-row"><div><div class="footer-brand">LÜMA</div><small>Italian Kitchen &amp; More · Le Kef, Tunisie</small></div><nav class="footer-links" aria-label="Navigation de pied de page"><a href="index.html">Accueil</a><a href="menu.html">La carte</a><a href="gallery.html">Galerie</a><a href="about.html">Le lieu</a><a href="contact.html">Contact</a></nav><small>Concept de démonstration · Non publié</small></div></footer>
 <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Visionneuse d’images"><button class="lb-btn lb-close" id="lbClose" aria-label="Fermer">×</button><button class="lb-btn lb-prev" id="lbPrev" aria-label="Image précédente">‹</button><img id="lbImage" alt=""><button class="lb-btn lb-next" id="lbNext" aria-label="Image suivante">›</button><p class="lb-caption" id="lbCaption"></p></div>
-<script src="assets/js/menu-data.js?v=13"></script>
-<script src="assets/js/site.js?v=13"></script>
+<script src="assets/js/menu-data.js?v=14"></script>
+<script src="assets/js/site.js?v=14"></script>
 </body>
 </html>
