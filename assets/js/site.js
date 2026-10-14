@@ -226,11 +226,25 @@
          half-width column with a hollow gap beside it. */
       resultsHost.classList.toggle('single', limit && shown.length === 1);
       var total = 0;
+      var catNumbers = {};
+      LUMA_MENU.forEach(function (c, i) { catNumbers[c.category] = i + 1; });
       shown.forEach(function (group) {
         var article = document.createElement('article');
         article.className = 'menu-category';
+        var head = document.createElement('header');
+        head.className = 'cat-head';
+        /* 01, 02, 03… keeps the full-carte order even when a filter narrows the view. */
+        var catIndex = catNumbers[group.category] || 0;
+        if (catIndex > 0) {
+          var num = document.createElement('span');
+          num.className = 'cat-num';
+          num.setAttribute('aria-hidden', 'true');
+          num.textContent = (catIndex < 10 ? '0' : '') + catIndex;
+          head.appendChild(num);
+        }
         var h = document.createElement('h3'); h.textContent = group.category;
-        article.appendChild(h);
+        head.appendChild(h);
+        article.appendChild(head);
         if (group.note) {
           var n = document.createElement('p'); n.className = 'category-note'; n.textContent = group.note;
           article.appendChild(n);
@@ -240,16 +254,20 @@
         visible.forEach(function (it) {
           total += 1;
           var row = document.createElement('div'); row.className = 'menu-item';
-          var info = document.createElement('div');
+          /* Dish line: name + dotted leader + price, the way a printed carte runs. */
+          var line = document.createElement('div'); line.className = 'menu-item-line';
           var title = document.createElement('strong'); title.textContent = it[0];
-          info.appendChild(title);
-          if (it[2]) { var sm = document.createElement('small'); sm.textContent = it[2]; info.appendChild(sm); }
-          row.appendChild(info);
+          line.appendChild(title);
+          var lead = document.createElement('span'); lead.className = 'leader';
+          lead.setAttribute('aria-hidden', 'true');
+          line.appendChild(lead);
+          row.appendChild(line);
           if (it[1] !== null && it[1] !== undefined) {
             var sp = document.createElement('span'); sp.className = 'menu-price';
             sp.textContent = String(it[1]).replace('.', ',') + ' DT';
             row.appendChild(sp);
           }
+          if (it[2]) { var sm = document.createElement('small'); sm.textContent = it[2]; row.appendChild(sm); }
           list.appendChild(row);
         });
         article.appendChild(list);
