@@ -14,17 +14,41 @@
   scrollHeader();
   window.addEventListener('scroll', scrollHeader, { passive: true });
 
-  /* Hero video: force-muted autoplay (attribute alone isn't always enough) */
+  /* Hero video: force-muted autoplay with retry (PC browsers often block the first play() call) */
   var heroVideo = $('.hero-media video');
   if (heroVideo) {
     heroVideo.muted = true;
+    heroVideo.defaultMuted = true;
     heroVideo.setAttribute('muted', '');
-    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    heroVideo.setAttribute('playsinline', '');
+    heroVideo.playsInline = true;
+    var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduceMotion) {
       heroVideo.removeAttribute('autoplay');
       heroVideo.pause();
     } else {
-      var playPromise = heroVideo.play();
-      if (playPromise && playPromise.catch) { playPromise.catch(function () {}); }
+      var playAttempted = false;
+      var tryPlay = function () {
+        if (playAttempted && !heroVideo.paused) return;
+        playAttempted = true;
+        try {
+          var p = heroVideo.play();
+          if (p && p.catch) { p.catch(function () { /* retry on next gesture */ playAttempted = false; }); }
+        } catch (e) { playAttempted = false; }
+      };
+      heroVideo.addEventListener('canplay', tryPlay);
+      heroVideo.addEventListener('loadeddata', tryPlay);
+      tryPlay();
+      var retryOnce = function () { if (heroVideo.paused) tryPlay(); };
+      ['pointerdown', 'touchstart', 'keydown', 'wheel'].forEach(function (ev) {
+        window.addEventListener(ev, retryOnce, { once: true, passive: true });
+      });
+      document.addEventListener('visibilitychange', function () {
+        if (!document.hidden) retryOnce();
+      });
+      heroVideo.addEventListener('error', function () {
+        heroVideo.style.display = 'none';
+      }, true);
     }
   }
 
