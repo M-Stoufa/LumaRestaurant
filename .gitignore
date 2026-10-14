@@ -1,0 +1,10 @@
+# Local/editor junk — never publish these
+.DS_Store
+Thumbs.db
+*.log
+*.tmp
+*backup*
+*BACKUP*
+
+# Keep the demo out of search results until the owner approves launch.
+# (robots noindex is already set in every page — leave it until go-live.)
