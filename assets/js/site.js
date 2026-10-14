@@ -272,7 +272,8 @@
   /* Category pills: no scrollbar — drag with mouse, swipe natively on touch,
      plus a smooth auto ping-pong that never stops (pauses only while dragging). */
   if (filterHost) {
-    var pillsReduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    /* Note: intentionally ignores prefers-reduced-motion — the client wants
+       the strip to always keep moving. */
     var pillsDrag = false, pillsMoved = 0, pillsStartX = 0, pillsStartScroll = 0;
     var PILLS_SPEED = 60, PILLS_DWELL_MS = 900, PILLS_RESUME_MS = 1500;
     var pillsDir = 1;
@@ -332,20 +333,21 @@
     window.addEventListener('resize', pillsSyncEdges);
 
     var pillsLastClock = 0;
+    var pillsPos = 0;      // float accumulator (scrollLeft can round to int and stall)
     function pillsTick(t) {
-      if (pillsClockOrigin === null) { pillsClockOrigin = t; pillsResumeAt = t + PILLS_DWELL_MS; }
+      if (pillsClockOrigin === null) { pillsClockOrigin = t; pillsResumeAt = t + 1200; pillsPos = filterHost.scrollLeft; }
       pillsLastClock = t;
-      if (!pillsReduceMotion && !pillsDrag && !document.hidden && t >= pillsResumeAt) {
+      if (!pillsDrag && !document.hidden && t >= pillsResumeAt) {
         var max = pillsMax();
         if (max > 0) {
-          var next = filterHost.scrollLeft + pillsDir * PILLS_SPEED * 0.016;
-          if (next >= max - 0.5) { next = max; pillsDir = -1; pillsResumeAt = t + PILLS_DWELL_MS; }
-          else if (next <= 0.5) { next = 0; pillsDir = 1; pillsResumeAt = t + PILLS_DWELL_MS; }
-          if (Math.abs(next - filterHost.scrollLeft) > 0.001) {
-            filterHost.scrollLeft = next;
-            pillsSyncEdges();
-          }
+          pillsPos += pillsDir * PILLS_SPEED * 0.016;
+          if (pillsPos >= max) { pillsPos = max; pillsDir = -1; pillsResumeAt = t + PILLS_DWELL_MS; }
+          else if (pillsPos <= 0) { pillsPos = 0; pillsDir = 1; pillsResumeAt = t + PILLS_DWELL_MS; }
+          filterHost.scrollLeft = pillsPos;
+          pillsSyncEdges();
         }
+      } else {
+        pillsPos = filterHost.scrollLeft;
       }
       window.requestAnimationFrame(pillsTick);
     }
