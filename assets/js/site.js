@@ -194,6 +194,7 @@
   if (filterHost && resultsHost && typeof LUMA_MENU !== 'undefined') {
     var activeCategory = 'Toutes';
     var limit = filterHost.getAttribute('data-limit') === 'preview';
+    var PREVIEW_ITEMS = 6;   // homepage cards: short teaser, not the whole category
     function currentQuery() { return searchInput ? searchInput.value.trim().toLowerCase() : ''; }
     function renderMenu() {
       var q = currentQuery();
@@ -221,6 +222,9 @@
       }
       resultsHost.innerHTML = '';
       var shown = limit ? groups.slice(0, 4) : groups;
+      /* A single category gets one wide card; the preview never renders a
+         half-width column with a hollow gap beside it. */
+      resultsHost.classList.toggle('single', limit && shown.length === 1);
       var total = 0;
       shown.forEach(function (group) {
         var article = document.createElement('article');
@@ -232,7 +236,8 @@
           article.appendChild(n);
         }
         var list = document.createElement('div'); list.className = 'menu-items';
-        group.items.forEach(function (it) {
+        var visible = limit ? group.items.slice(0, PREVIEW_ITEMS) : group.items;
+        visible.forEach(function (it) {
           total += 1;
           var row = document.createElement('div'); row.className = 'menu-item';
           var info = document.createElement('div');
@@ -248,6 +253,14 @@
           list.appendChild(row);
         });
         article.appendChild(list);
+        if (limit) {
+          var rest = group.items.length - visible.length;
+          var more = document.createElement('a');
+          more.className = 'menu-more';
+          more.href = 'menu.html';
+          more.innerHTML = (rest > 0 ? '+' + rest + ' autres plats' : 'Toute la carte') + ' <span class="arrow" aria-hidden="true">↗</span>';
+          article.appendChild(more);
+        }
         resultsHost.appendChild(article);
       });
       if (!shown.length) {
