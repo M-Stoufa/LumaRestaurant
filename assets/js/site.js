@@ -275,7 +275,7 @@
     var pillsReduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     var pillsDrag = false, pillsMoved = 0, pillsStartX = 0, pillsStartScroll = 0;
     var pillsIdle = null, pillsDir = 1, pillsLastT = 0, pillsDwellUntil = 0;
-    var PILLS_SPEED = 45, PILLS_IDLE_MS = 3500, PILLS_DWELL_MS = 900;
+    var PILLS_SPEED = 60, PILLS_IDLE_MS = 3500, PILLS_DWELL_MS = 900;
     function pillsMax() { return Math.max(0, filterHost.scrollWidth - filterHost.clientWidth); }
     var pillsLastSync = -1;
     function pillsSyncEdges() {
