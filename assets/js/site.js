@@ -268,4 +268,81 @@
     if (searchInput) searchInput.addEventListener('input', renderMenu);
     renderMenu();
   }
+
+  /* Category pills: no scrollbar — drag with mouse, swipe natively on touch,
+     plus a gentle auto ping-pong that pauses while interacting. */
+  if (filterHost) {
+    var pillsReduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var pillsDrag = false, pillsMoved = 0, pillsStartX = 0, pillsStartScroll = 0;
+    var pillsIdle = null, pillsDir = 1, pillsLastT = 0, pillsDwellUntil = 0;
+    var PILLS_SPEED = 45, PILLS_IDLE_MS = 3500, PILLS_DWELL_MS = 900;
+    function pillsMax() { return Math.max(0, filterHost.scrollWidth - filterHost.clientWidth); }
+    var pillsLastSync = -1;
+    function pillsSyncEdges() {
+      var s = Math.round(filterHost.scrollLeft);
+      if (s === pillsLastSync) return;
+      pillsLastSync = s;
+      var max = pillsMax();
+      filterHost.classList.toggle('at-start', s <= 2);
+      filterHost.classList.toggle('at-end', s >= max - 2);
+    }
+    function pillsPause() {
+      if (pillsIdle) { window.clearTimeout(pillsIdle); }
+      pillsIdle = window.setTimeout(function () { pillsIdle = null; pillsLastT = 0; }, PILLS_IDLE_MS);
+    }
+    filterHost.addEventListener('mousedown', function (e) {
+      if (e.button !== 0) return;
+      pillsDrag = true; pillsMoved = 0;
+      pillsStartX = e.clientX; pillsStartScroll = filterHost.scrollLeft;
+      filterHost.classList.add('dragging');
+      pillsPause();
+      e.preventDefault();
+    });
+    window.addEventListener('mousemove', function (e) {
+      if (!pillsDrag) return;
+      var dx = e.clientX - pillsStartX;
+      if (Math.abs(dx) > pillsMoved) { pillsMoved = Math.abs(dx); }
+      filterHost.scrollLeft = pillsStartScroll - dx;
+      pillsSyncEdges();
+    });
+    window.addEventListener('mouseup', function () {
+      if (!pillsDrag) return;
+      pillsDrag = false;
+      filterHost.classList.remove('dragging');
+      pillsSyncEdges();
+      pillsPause();
+    });
+    filterHost.addEventListener('click', function (e) {
+      if (pillsMoved > 6) { e.preventDefault(); e.stopPropagation(); pillsMoved = 0; }
+    }, true);
+    filterHost.addEventListener('touchstart', pillsPause, { passive: true });
+    filterHost.addEventListener('wheel', function (e) {
+      if (Math.abs(e.deltaY) > Math.abs(e.deltaX) && pillsMax() > 0) {
+        filterHost.scrollLeft += e.deltaY;
+        e.preventDefault();
+        pillsSyncEdges();
+        pillsPause();
+      }
+    }, { passive: false });
+    filterHost.addEventListener('scroll', pillsSyncEdges, { passive: true });
+    window.addEventListener('resize', pillsSyncEdges);
+    function pillsTick(t) {
+      if (!pillsReduceMotion && !pillsDrag && !pillsIdle && !document.hidden && t >= pillsDwellUntil) {
+        if (!pillsLastT) { pillsLastT = t; }
+        var dt = Math.min(0.05, (t - pillsLastT) / 1000);
+        pillsLastT = t;
+        var max = pillsMax();
+        if (max > 0 && dt > 0) {
+          var next = filterHost.scrollLeft + pillsDir * PILLS_SPEED * dt;
+          if (next >= max) { next = max; pillsDir = -1; pillsDwellUntil = t + PILLS_DWELL_MS; }
+          else if (next <= 0) { next = 0; pillsDir = 1; pillsDwellUntil = t + PILLS_DWELL_MS; }
+          filterHost.scrollLeft = next;
+          pillsSyncEdges();
+        }
+      } else if (pillsDrag || pillsIdle) { pillsLastT = 0; }
+      window.requestAnimationFrame(pillsTick);
+    }
+    pillsSyncEdges();
+    window.requestAnimationFrame(pillsTick);
+  }
 })();
