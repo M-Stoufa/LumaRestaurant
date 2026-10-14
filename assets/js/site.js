@@ -142,14 +142,14 @@
   var PHOTOS = {
     preview: [
       { src: 'assets/photos/food-table.jpg', alt: 'Table garnie de plats LÜMA', title: 'Table garnie' },
-      { src: 'assets/photos/pizza-original.jpg', pcSrc: 'assets/photos/pizza-original-pc.jpg?v=21', alt: 'Pizza photographiée chez LÜMA', title: 'Pizza' },
+      { src: 'assets/photos/pizza-original.jpg', alt: 'Pizza photographiée chez LÜMA', title: 'Pizza' },
       { src: 'assets/photos/seafood-original.jpg', alt: 'Plat de fruits de mer photographié chez LÜMA', title: 'Fruits de mer' },
       { src: 'assets/photos/dessert-closeup.jpg', alt: 'Dessert photographié chez LÜMA', title: 'Dessert' },
       { src: 'assets/photos/dessert-drink.jpg', alt: 'Dessert et boisson photographiés chez LÜMA', title: 'Dessert et boisson' }
     ],
     full: [
       /* Only photographs that appear nowhere else on the site. */
-      { src: 'assets/photos/pizza-original.jpg', pcSrc: 'assets/photos/pizza-original-pc.jpg?v=21', alt: 'Pizza photographiée chez LÜMA', title: 'Pizza' },
+      { src: 'assets/photos/pizza-original.jpg', alt: 'Pizza photographiée chez LÜMA', title: 'Pizza' },
       { src: 'assets/photos/seafood-original.jpg', alt: 'Plat de fruits de mer photographié chez LÜMA', title: 'Fruits de mer' },
       { src: 'assets/photos/plated-dish-original.jpg', alt: 'Assiette dressée photographiée chez LÜMA', title: 'Assiette dressée' },
       { src: 'assets/photos/menu-dish-01.jpg', alt: 'Plat photographié chez LÜMA', title: 'Plat' },
