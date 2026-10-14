@@ -161,8 +161,7 @@
       { src: 'assets/photos/dessert-closeup.jpg', alt: 'Gros plan sur un dessert LÜMA', title: 'Dessert' },
       { src: 'assets/photos/dessert-oreo-cake.jpg', alt: 'Cheesecake aux Oreo photographié chez LÜMA', title: 'Cheesecake Oreo' },
       { src: 'assets/photos/dessert-drink.jpg', alt: 'Dessert et boisson photographiés chez LÜMA', title: 'Dessert et boisson' },
-      { src: 'assets/photos/drink.jpg', alt: 'Boisson servie chez LÜMA', title: 'Boisson' },
-      { src: 'assets/photos/place-night.jpg', alt: 'LÜMA le soir, façade et terrasse', title: 'LÜMA la nuit' }
+      { src: 'assets/photos/drink.jpg', alt: 'Boisson servie chez LÜMA', title: 'Boisson' }
     ]
   };
   $$('[data-gallery]').forEach(function (grid) {
