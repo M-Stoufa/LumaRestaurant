@@ -77,3 +77,30 @@
   .hero-rating .hr-arrow{font-size:clamp(9px,.9cqw,13px)}
 }
 @media(min-width:721px) and (max-width:999px){.hero-rating .hr-label{display:none}}
+
+/* Phone pass — the two places the narrow layout was working against the content:
+   1) the menu-preview photos. The three clichés are 9:16 portraits (1085x1929);
+      the phone laid them in a horizontal rail of 208px 3/4 cards, so every photo
+      was cropped AND the rail measured 644px in a 375px window — the third card
+      sat off-screen behind a scroll. On phones they become a 2-up grid shown at
+      their native ratio (so the whole photo is visible), with the last one
+      centred so the trio reads as finished instead of cut.
+   2) the hero facts used repeat(auto-fit,minmax(150px,1fr)); its min-content is
+      3x150px + gaps = 498px, which forced .hero-copy (and the intro text, the
+     buttons and the "La carte" column) to run past the right edge of every
+   phone. Two flexible columns let the hero copy sit inside the phone width. */
+@media(max-width:720px){
+  .menu-images{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;
+    overflow:visible;scroll-snap-type:none;padding-bottom:0;overscroll-behavior-x:auto;
+    max-width:none;align-items:start}
+  .menu-images .food-card:nth-child(n){aspect-ratio:1085/1929;flex:none;transform:none;scroll-snap-align:none}
+  .menu-images .food-card:nth-child(3){grid-column:1/-1;width:calc(50% - 5px);justify-self:center}
+  .menu-images .food-card span{left:10px;bottom:10px;font-size:.85rem}
+  .hero-facts{grid-template-columns:repeat(2,minmax(0,1fr));gap:14px 18px}
+}
+/* wide-but-still-phone viewports (7" tablets, 600-720 CSS px): three-across keeps
+   the portraits from ballooning, and matches the desktop trio arrangement. */
+@media(min-width:600px) and (max-width:720px){
+  .menu-images{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .menu-images .food-card:nth-child(3){grid-column:auto;width:auto;justify-self:auto}
+}
