@@ -63,7 +63,8 @@
     nav.classList.toggle('open', open);
     toggle.setAttribute('aria-expanded', String(open));
     toggle.setAttribute('aria-label', open ? 'Fermer le menu' : 'Ouvrir le menu');
-    toggle.textContent = open ? '\u00D7' : '\u2630';
+    /* The burger/close icons are two inline SVGs swapped via [aria-expanded] in CSS,
+       so nothing needs to happen here. */
     document.body.classList.toggle('lock', open);
     document.body.classList.toggle('nav-open', open);
   }
@@ -298,7 +299,7 @@
           var more = document.createElement('a');
           more.className = 'menu-more';
           more.href = 'menu.html';
-          more.innerHTML = (rest > 0 ? '+' + rest + ' autres plats' : 'Toute la carte') + ' <span class="arrow" aria-hidden="true">↗</span>';
+          more.innerHTML = (rest > 0 ? '+' + rest + ' autres plats' : 'Toute la carte') + ' <span class="arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg></span>';
           article.appendChild(more);
         }
         resultsHost.appendChild(article);
