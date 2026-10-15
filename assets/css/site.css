@@ -104,3 +104,74 @@
   .menu-images{grid-template-columns:repeat(3,minmax(0,1fr))}
   .menu-images .food-card:nth-child(3){grid-column:auto;width:auto;justify-self:auto}
 }
+
+/* ── Mobile drawer — editorial redesign ─────────────────────────────────
+   The old drawer was a flat bordered list: no hierarchy, no numbering,
+   contact/social crammed as plain text. This rebuilds it as a proper
+   designed panel — numbered nav items with a gold hairline that grows on
+   tap, a divider before the contact block, and social as circular icon
+   buttons. All desktop rules stay untouched (this only runs ≤720px). */
+@media(max-width:720px){
+  .navlinks{padding:92px 30px 40px;gap:0;counter-reset:nav}
+
+  /* Primary nav items: index number + label, gold rule underneath. */
+  .navlinks>li:not(.drawer-only){counter-increment:nav;position:relative;opacity:0;transform:translateX(14px)}
+  .navlinks.open>li:not(.drawer-only){opacity:1;transform:none;transition:opacity .5s ease,transform .5s cubic-bezier(.2,.7,.2,1)}
+  .navlinks.open>li:nth-child(1):not(.drawer-only){transition-delay:.05s}
+  .navlinks.open>li:nth-child(2):not(.drawer-only){transition-delay:.11s}
+  .navlinks.open>li:nth-child(3):not(.drawer-only){transition-delay:.17s}
+  .navlinks.open>li:nth-child(4):not(.drawer-only){transition-delay:.23s}
+  .navlinks.open>li:nth-child(5):not(.drawer-only){transition-delay:.29s}
+  .navlinks>li:not(.drawer-only) a{
+    display:flex;align-items:baseline;gap:14px;
+    font:400 1.9rem/1.1 var(--serif);letter-spacing:-.01em;color:#e8e4da;
+    padding:15px 0;border-bottom:1px solid transparent;transition:color .3s ease;
+  }
+  .navlinks>li:not(.drawer-only) a::before{
+    content:counter(nav,decimal-leading-zero);
+    font:600 .62rem/1 var(--sans);letter-spacing:.14em;color:var(--gold);
+    opacity:.6;transition:opacity .3s ease;min-width:20px;
+  }
+  /* animated gold underline (scaleX) — replaces the flat border */
+  .navlinks>li:not(.drawer-only) a::after{
+    content:'';display:block;position:absolute;left:0;bottom:0;
+    width:100%;height:1px;background:var(--gold);transform:scaleX(0);
+    transform-origin:right;transition:transform .35s ease;
+  }
+  .navlinks>li:not(.drawer-only) a:hover,
+  .navlinks>li:not(.drawer-only) a:active{color:#fff}
+  .navlinks>li:not(.drawer-only) a:hover::before,
+  .navlinks>li:not(.drawer-only) a:active::before{opacity:1}
+  .navlinks>li:not(.drawer-only) a:hover::after,
+  .navlinks>li:not(.drawer-only) a:active::after{transform:scaleX(1);transform-origin:left}
+  .navlinks>li:not(.drawer-only) a[aria-current="page"]{color:var(--gold2)}
+  .navlinks>li:not(.drawer-only) a[aria-current="page"]::before{opacity:1;color:var(--gold2)}
+  .navlinks>li:not(.drawer-only) a[aria-current="page"]::after{transform:scaleX(1)}
+
+  /* Divider + breathing room before the contact/social block. */
+  .navlinks .drawer-only{margin-top:0;padding-top:22px;border-top:1px solid var(--line);opacity:0;transform:translateX(14px)}
+  .navlinks.open .drawer-only{opacity:1;transform:none;transition:opacity .5s ease .38s,transform .5s cubic-bezier(.2,.7,.2,1) .38s}
+  .navlinks .drawer-only span{
+    display:block;font:600 .6rem/1 var(--sans);letter-spacing:.2em;text-transform:uppercase;
+    color:#8f8b80;margin:0 0 12px;
+  }
+  .navlinks .drawer-only a{
+    font:500 .92rem/1 var(--sans);letter-spacing:.02em;color:#e8ded0;
+    padding:8px 0;border-bottom:0;display:inline-flex;align-items:center;gap:11px;
+  }
+  .navlinks .drawer-contact a{color:var(--gold2)}
+  .navlinks .drawer-only a svg{width:17px;height:17px;color:var(--gold);flex:0 0 auto}
+
+  /* Social: circular icon buttons in a row. */
+  .navlinks .drawer-social .dsocial{display:flex;gap:12px}
+  .navlinks .drawer-social .dsocial a{
+    width:44px;height:44px;padding:0;border:1px solid var(--line);border-radius:50%;
+    display:grid;place-items:center;color:var(--gold2);
+    transition:background .25s ease,color .25s ease,border-color .25s ease,transform .25s ease;
+  }
+  .navlinks .drawer-social .dsocial a:hover,
+  .navlinks .drawer-social .dsocial a:active{
+    background:var(--gold);border-color:var(--gold);color:var(--night);transform:translateY(-2px);
+  }
+  .navlinks .drawer-social .dsocial a svg{width:18px;height:18px;color:currentColor}
+}
