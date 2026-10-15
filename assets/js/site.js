@@ -65,12 +65,23 @@
     toggle.setAttribute('aria-label', open ? 'Fermer le menu' : 'Ouvrir le menu');
     toggle.textContent = open ? '\u00D7' : '\u2630';
     document.body.classList.toggle('lock', open);
+    document.body.classList.toggle('nav-open', open);
   }
   if (toggle && nav) {
     toggle.addEventListener('click', function () { setMenu(!nav.classList.contains('open')); });
     $$('a', nav).forEach(function (a) { a.addEventListener('click', function () { setMenu(false); }); });
     document.addEventListener('keydown', function (e) {
       if (e.key === 'Escape' && nav.classList.contains('open')) { setMenu(false); toggle.focus(); }
+    });
+    /* The drawer is a panel pinned to the right; on phones it leaves only a thin
+       strip of page visible on the left. Tapping anywhere outside the panel
+       (that strip, or the dimmed backdrop) is the natural way to close a menu,
+       so the whole page dismisses it — the toggle keeps its own behaviour and
+       links inside the panel are left alone. */
+    document.addEventListener('click', function (e) {
+      if (!nav.classList.contains('open')) return;
+      if (nav.contains(e.target) || toggle.contains(e.target)) return;
+      setMenu(false);
     });
     window.addEventListener('resize', function () { if (window.innerWidth > 720) setMenu(false); });
   }
