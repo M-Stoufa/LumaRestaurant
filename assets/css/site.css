@@ -39,32 +39,40 @@
 .gallery-grid.full .gallery-item:hover .gallery-cap,.gallery-grid.full .gallery-item:focus-visible .gallery-cap{transform:translateY(0);opacity:1}
 .gallery-grid.full .gallery-item::after{top:14px;bottom:auto;z-index:3}
 /* Home hero — full-bleed ambience video background with the copy on the left. */
-@media(max-width:980px){.hero-inner{grid-template-columns:1fr}.hero h1{font-size:clamp(3.6rem,9vw,5.4rem)}.hero-facts{max-width:none}}
+@media(max-width:980px){.hero-inner{grid-template-columns:1fr}.hero h1{font-size:clamp(3.6rem,9vw,5.4rem)}}
+/* keep the hero info rows clear of the corner plaque on narrow desktops (plaque min-width 238px) */
+@media(min-width:721px) and (max-width:900px){.hero-facts{max-width:calc(100% - 262px)}}
 @media(max-width:720px){.hero-copy{padding:0}.hero h1{font-size:clamp(3.1rem,14vw,4.4rem)}}
 
-/* Hero video corner plate.
-   The clip carries a burnt-in "MINIMAX | Hailuo AI" watermark at x 74.3-99.7%, y 85.8-97%
-   of its frame. .video-corner reproduces the exact rendered video box (object-fit:contain)
-   with width:min(100cqw,235.9cqh) - 2944/1248*100 - so .hero-rating lands precisely on that
-   zone at every desktop width and hides it behind the restaurant's Google rating card. */
+/* Hero corner plaque — a designed plate that sits exactly on the clip's burnt-in
+   "MINIMAX | Hailuo AI" watermark (x 74.3-99.7%, y 85.8-97% of the frame).
+   .video-corner reproduces the rendered video box (object-fit:contain) so the plaque
+   lands on that zone at every width. The watermark zone is wide and short, so the
+   plaque is a wide editorial plaque: big serif score, gold hairline, stars, CTA badge. */
 .video-corner{position:absolute;inset:0;z-index:1;pointer-events:none}
-.hero-rating{pointer-events:auto;position:absolute;right:16px;bottom:16px;display:flex;align-items:center;gap:10px;
-  padding:10px 16px;text-decoration:none;color:var(--cream);background:rgba(13,15,13,.96);border:1px solid var(--line);
-  box-shadow:inset 0 2px 0 var(--gold);white-space:nowrap;overflow:hidden;text-align:center;
-  font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;transition:border-color .25s,background .25s}
-.hero-rating:hover{border-color:var(--gold);background:rgba(13,15,13,1)}
-.hero-rating .hr-line{display:flex;align-items:center;gap:9px}
-.hero-rating .hr-stars{color:var(--gold);letter-spacing:.12em;font-size:.74rem}
-.hero-rating .hr-score{color:var(--gold2);font-weight:700;font-size:1.02rem;letter-spacing:.02em}
-.hero-rating .hr-label{color:#d6d1c5}
-.hero-rating .hr-arrow{color:var(--gold)}
+.hero-rating{pointer-events:auto;position:absolute;right:18px;bottom:18px;display:flex;align-items:center;justify-content:center;
+  gap:11px;padding:12px 17px;text-decoration:none;color:var(--cream);background:rgba(12,14,12,.97);
+  border:1px solid rgba(201,166,107,.42);box-shadow:0 16px 38px rgba(0,0,0,.45);
+  font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;white-space:nowrap;
+  transition:border-color .3s,box-shadow .3s}
+.hero-rating:hover{border-color:var(--gold);box-shadow:0 16px 38px rgba(0,0,0,.55),0 0 0 1px rgba(201,166,107,.35)}
+.hero-rating .hr-score{font:400 1.34rem/1 var(--serif);letter-spacing:-.01em;color:var(--gold2);text-transform:none}
+.hero-rating .hr-score i{font-style:normal;font-size:.54em;color:rgba(230,207,155,.7);margin-left:1px}
+.hero-rating .hr-stars{color:var(--gold);font-size:.76rem;letter-spacing:.16em;padding-left:11px;border-left:1px solid rgba(201,166,107,.34)}
+.hero-rating .hr-label{color:#cdc7ba;letter-spacing:.09em}
+.hero-rating .hr-arrow{display:grid;place-items:center;width:1.95em;height:1.95em;border:1px solid rgba(201,166,107,.42);
+  border-radius:50%;color:var(--gold2);font-size:.84em;letter-spacing:0;transition:background .3s,color .3s,border-color .3s}
+.hero-rating:hover .hr-arrow{background:var(--gold);border-color:var(--gold);color:var(--night)}
 @media(min-width:721px){
   .hero-media{container-type:size}
   .video-corner{inset:auto;left:50%;top:50%;transform:translate(-50%,-50%);width:min(100cqw,235.9cqh);aspect-ratio:2944/1248}
-  .hero-rating{right:0;bottom:0;width:27.5%;height:15.5%;flex-direction:column;justify-content:center;gap:5px;padding:0 1%}
-  .hero-rating .hr-line{gap:1.1cqw}
-  .hero-rating .hr-stars{font-size:clamp(.66rem,1.05cqw,.95rem)}
-  .hero-rating .hr-score{font-size:clamp(.9rem,1.7cqw,1.5rem)}
-  .hero-rating .hr-label{font-size:clamp(.62rem,1cqw,.85rem)}
-  .hero-rating .hr-arrow{font-size:clamp(.7rem,1.1cqw,1rem)}
+  .hero-rating{right:0;bottom:0;width:clamp(238px,27.5%,100%);height:clamp(58px,15.5%,100%);
+    justify-content:space-between;gap:clamp(9px,1.15cqw,20px);padding:0 clamp(14px,1.6cqw,26px);
+    background:linear-gradient(180deg,rgba(24,26,23,.985),rgba(10,12,10,.985));
+    border-color:rgba(201,166,107,.34);box-shadow:inset 0 2px 0 var(--gold),-20px 0 44px rgba(0,0,0,.3)}
+  .hero-rating .hr-score{font-size:clamp(21px,2.3cqw,34px)}
+  .hero-rating .hr-stars{font-size:clamp(9px,1cqw,14px);letter-spacing:.15em;padding-left:clamp(9px,1.1cqw,18px)}
+  .hero-rating .hr-label{font-size:clamp(8.5px,.82cqw,11.5px)}
+  .hero-rating .hr-arrow{font-size:clamp(9px,.9cqw,13px)}
 }
+@media(min-width:721px) and (max-width:999px){.hero-rating .hr-label{display:none}}
