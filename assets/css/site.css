@@ -162,16 +162,11 @@
   .navlinks .drawer-contact a{color:var(--gold2)}
   .navlinks .drawer-only a svg{width:17px;height:17px;color:var(--gold);flex:0 0 auto}
 
-  /* Social: circular icon buttons in a row. */
-  .navlinks .drawer-social .dsocial{display:flex;gap:12px}
-  .navlinks .drawer-social .dsocial a{
-    width:44px;height:44px;padding:0;border:1px solid var(--line);border-radius:50%;
-    display:grid;place-items:center;color:var(--gold2);
-    transition:background .25s ease,color .25s ease,border-color .25s ease,transform .25s ease;
-  }
+  /* Social: icon + name links, wrapping in a row (was icon-only circles). */
+  .navlinks .drawer-social .dsocial{display:flex;flex-wrap:wrap;gap:6px 28px}
+  .navlinks .drawer-social .dsocial a{padding:7px 0;gap:10px;transition:color .25s ease}
   .navlinks .drawer-social .dsocial a:hover,
-  .navlinks .drawer-social .dsocial a:active{
-    background:var(--gold);border-color:var(--gold);color:var(--night);transform:translateY(-2px);
-  }
-  .navlinks .drawer-social .dsocial a svg{width:18px;height:18px;color:currentColor}
+  .navlinks .drawer-social .dsocial a:active{color:var(--gold2)}
+  .navlinks .drawer-social .dsocial a svg{transition:transform .25s ease}
+  .navlinks .drawer-social .dsocial a:hover svg{transform:translateY(-1px)}
 }
