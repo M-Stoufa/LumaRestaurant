@@ -41,3 +41,30 @@
 /* Home hero — full-bleed ambience video background with the copy on the left. */
 @media(max-width:980px){.hero-inner{grid-template-columns:1fr}.hero h1{font-size:clamp(3.6rem,9vw,5.4rem)}.hero-facts{max-width:none}}
 @media(max-width:720px){.hero-copy{padding:0}.hero h1{font-size:clamp(3.1rem,14vw,4.4rem)}}
+
+/* Hero video corner plate.
+   The clip carries a burnt-in "MINIMAX | Hailuo AI" watermark at x 74.3-99.7%, y 85.8-97%
+   of its frame. .video-corner reproduces the exact rendered video box (object-fit:contain)
+   with width:min(100cqw,235.9cqh) - 2944/1248*100 - so .hero-rating lands precisely on that
+   zone at every desktop width and hides it behind the restaurant's Google rating card. */
+.video-corner{position:absolute;inset:0;z-index:1;pointer-events:none}
+.hero-rating{pointer-events:auto;position:absolute;right:16px;bottom:16px;display:flex;align-items:center;gap:10px;
+  padding:10px 16px;text-decoration:none;color:var(--cream);background:rgba(13,15,13,.96);border:1px solid var(--line);
+  box-shadow:inset 0 2px 0 var(--gold);white-space:nowrap;overflow:hidden;text-align:center;
+  font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;transition:border-color .25s,background .25s}
+.hero-rating:hover{border-color:var(--gold);background:rgba(13,15,13,1)}
+.hero-rating .hr-line{display:flex;align-items:center;gap:9px}
+.hero-rating .hr-stars{color:var(--gold);letter-spacing:.12em;font-size:.74rem}
+.hero-rating .hr-score{color:var(--gold2);font-weight:700;font-size:1.02rem;letter-spacing:.02em}
+.hero-rating .hr-label{color:#d6d1c5}
+.hero-rating .hr-arrow{color:var(--gold)}
+@media(min-width:721px){
+  .hero-media{container-type:size}
+  .video-corner{inset:auto;left:50%;top:50%;transform:translate(-50%,-50%);width:min(100cqw,235.9cqh);aspect-ratio:2944/1248}
+  .hero-rating{right:0;bottom:0;width:27.5%;height:15.5%;flex-direction:column;justify-content:center;gap:5px;padding:0 1%}
+  .hero-rating .hr-line{gap:1.1cqw}
+  .hero-rating .hr-stars{font-size:clamp(.66rem,1.05cqw,.95rem)}
+  .hero-rating .hr-score{font-size:clamp(.9rem,1.7cqw,1.5rem)}
+  .hero-rating .hr-label{font-size:clamp(.62rem,1cqw,.85rem)}
+  .hero-rating .hr-arrow{font-size:clamp(.7rem,1.1cqw,1rem)}
+}
